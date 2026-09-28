@@ -1,7 +1,7 @@
 # Multiple-Hypothesis-Testing-Guarantee-for-Miscoverage-Loss-on-Arbitrary-Predictor-models.
 This repository provides a presentation of how a high probability guarantee can be conferred on the population level miscoverage loss. It contains the explanation, the code and visualizations.
 
-Motivation
+#Motivation
 
 Modern machine learning models can be trained to make accurate predictions, but their performance on future, unseen data is inherently uncertain. In many applications, it is therefore important not only to produce predictions, but also to provide statistical guarantees on the risk of those predictions being incorrect.
 
@@ -35,3 +35,84 @@ Thus, the central question addressed in this repository is:
 Given an arbitrary trained predictor and finite data, how can we construct a prediction set whose population miscoverage risk is controlled at a desired level with high probability?
 
 The approach developed in this project uses multiple hypothesis testing to obtain this guarantee while allowing the procedure to adapt to the characteristics of the data and the trained predictor.
+
+# Hypothesis Setup
+
+To obtain the desired guarantee on the population miscoverage risk, we formulate the problem as a multiple hypothesis testing problem.
+
+Recall that our objective is to ensure
+
+\mathbb{P}\left(Y \notin C(\hat{f}(X))\right)
+\leq \epsilon.
+$$
+
+Suppose that the prediction set is constructed using a parameter $\lambda$, such that
+
+$$
+C_\lambda(\hat{f}(X))
+$$
+
+denotes the prediction set corresponding to $\lambda$. Increasing $\lambda$ can, for example, make the prediction set wider and therefore reduce its miscoverage probability.
+
+For a given value of $\lambda$, we would like to determine whether the corresponding population miscoverage risk satisfies the desired bound $\epsilon$. This can be expressed through the hypothesis pair
+
+$$
+H_\lambda:
+\quad
+R(\hat{f}, C_\lambda) > \epsilon
+$$
+
+versus
+
+$$
+H_\lambda':
+\quad
+R(\hat{f}, C_\lambda) \leq \epsilon.
+$$
+
+However, rather than testing only a single value of $\lambda$, we consider a collection of candidate values
+
+$$
+\lambda_1,\lambda_2,\ldots,\lambda_m.
+$$
+
+This gives rise to a family of hypotheses
+
+$$
+H_j:
+\quad
+R(\hat{f}, C_{\lambda_j}) > \epsilon,
+\qquad j=1,\ldots,m.
+$$
+
+Each hypothesis corresponds to the statement that the prediction set associated with $\lambda_j$ fails to achieve the desired population miscoverage level.
+
+The goal is therefore to identify which candidate prediction sets satisfy the desired risk constraint while controlling the probability of making an incorrect selection.
+
+Why Multiple Hypothesis Testing?
+
+The candidate prediction sets are evaluated simultaneously. If each candidate were tested independently at level $\alpha$, the probability of making at least one incorrect decision across all candidates could be substantially larger than $\alpha$.
+
+Multiple hypothesis testing provides a framework for controlling this multiplicity. In particular, we construct $p$-values for the hypotheses
+
+$$
+H_1,\ldots,H_m
+$$
+
+and apply a multiple hypothesis testing procedure to determine which hypotheses can be rejected while controlling an appropriate global error rate.
+
+If a hypothesis
+
+$$
+H_j: R(\hat{f}, C_{\lambda_j}) > \epsilon
+$$
+
+is rejected, this provides evidence that the corresponding prediction set satisfies
+
+$$
+R(\hat{f}, C_{\lambda_j}) \leq \epsilon.
+$$
+
+Consequently, the set of rejected hypotheses identifies candidate prediction sets for which the desired population-level miscoverage guarantee can be established.
+
+The key idea of this project is therefore to transform the problem of controlling population miscoverage risk into a multiple hypothesis testing problem, allowing established multiple testing procedures to provide the required high-probability guarantee.
