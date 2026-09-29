@@ -83,8 +83,5 @@ Note that the estimator of the quantity is the sum of the indicator functions, a
 
 Thus, the problem of obtaining a high-probability guarantee on population miscoverage is transformed into a multiple hypothesis testing problem: by controlling the appropriate multiple-testing error rate, we can identify prediction sets for which the desired population miscoverage guarantee holds with high probability.
 
-# Code
-The full code is added in one file, it contains the testing datasets that were created, evaluation procedure, quantile regression and hypothesis testing for ease of use. Note that the code to run, you need to activate the tf environment 
-
 ### *Note on Conditionality
 Every probabilistic statement made in this document is conditional on the training data, $T$ (and also the trained f_hat if the training procedure itself is probabilistic), though it is not explicitly written for ease of reading. This conditionality of the probabilistic claims of risk aligns with practical usage of pretrained machine learning models since claims need to be made on the specific model that is trained.
